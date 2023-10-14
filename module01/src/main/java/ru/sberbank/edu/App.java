@@ -7,7 +7,16 @@ package ru.sberbank.edu;
 public class App 
 {
     public static void main( String[] args ) {
-        System.out.println( new GreetingImpl("Tom", "programming"));
-        System.out.println(new GreetingImpl(null,null));
+        Greeting tomGreeting = new GreetingImpl("Tom", "programming");
+        Greeting anonGreeting = new GreetingImpl(null,null);
+
+        System.out.println(tomGreeting);
+        System.out.println(anonGreeting);
+
+
+        CommonDivisor cmd = new GCD();
+
+        System.out.println(cmd.getDivisor(24, 123));
+        System.out.println(cmd.getDivisor(24, 60));
     }
 }
