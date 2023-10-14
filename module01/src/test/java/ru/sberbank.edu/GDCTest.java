@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class GDCTest {
 
-    private GDC gdc;
+    private GCD gdc;
 
     @Before
     public void init(){
-        gdc = new GDC();
+        gdc = new GCD();
     }
 
     @After

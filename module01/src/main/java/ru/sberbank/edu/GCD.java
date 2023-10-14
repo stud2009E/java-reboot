@@ -1,6 +1,6 @@
 package ru.sberbank.edu;
 
-public class GDC implements CommonDivisor{
+public class GCD implements CommonDivisor{
 
     /**
      * calculate the greatest common divisor of two numbers by Euclid method
