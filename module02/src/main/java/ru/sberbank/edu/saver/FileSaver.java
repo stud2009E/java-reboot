@@ -22,6 +22,7 @@ public class FileSaver implements Saver{
             streamWriter.write(statistic.toString());
         }
 
+        System.out.println(statistic);
         System.out.println("end of recording statistics to file");
     }
 
