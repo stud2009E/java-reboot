@@ -76,4 +76,10 @@ public class RowStatistic implements Statistic {
 
         return longestLine;
     }
+    @Override
+    public String toString() {
+        return  "space count=" + getSpaceCount() + '\n' +
+                "line count=" + getLineCount() + '\n' +
+                "longest line='" + getLongestLine() + '\'';
+    }
 }
