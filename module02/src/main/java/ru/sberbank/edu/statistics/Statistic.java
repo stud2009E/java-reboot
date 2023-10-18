@@ -1,4 +1,4 @@
-package ru.sberbank.edu;
+package ru.sberbank.edu.statistics;
 
 
 // интерфейс можно менять
