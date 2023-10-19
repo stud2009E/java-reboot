@@ -1,12 +1,12 @@
-package ru.sberbank.edu.saver;
+package ru.sberbank.edu.storage;
 
 import ru.sberbank.edu.statistics.Statistic;
 
-public class DBSaver implements Saver {
+public class DBStorage implements Storage {
 
     private final String dbname;
 
-    public DBSaver(String dbname) {
+    public DBStorage(String dbname) {
         this.dbname = dbname;
     }
 

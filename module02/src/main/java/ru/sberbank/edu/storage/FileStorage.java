@@ -1,13 +1,13 @@
-package ru.sberbank.edu.saver;
+package ru.sberbank.edu.storage;
 
 import ru.sberbank.edu.statistics.Statistic;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class FileSaver implements Saver{
+public class FileStorage implements Storage {
     private final String path;
-    public FileSaver(String path){
+    public FileStorage(String path){
         this.path = path;
     }
 
