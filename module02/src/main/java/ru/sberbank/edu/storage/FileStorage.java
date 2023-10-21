@@ -14,6 +14,10 @@ public class FileStorage implements Storage {
 
     @Override
     public void save(String data) throws IOException {
+        if (data == null){
+            throw new IllegalArgumentException("data must be not NULL");
+        }
+
         File file = new File(path);
 
         System.out.println("start recording statistics to file...");
@@ -26,5 +30,4 @@ public class FileStorage implements Storage {
         System.out.println(data);
         System.out.println("end of recording statistics to file");
     }
-
 }
