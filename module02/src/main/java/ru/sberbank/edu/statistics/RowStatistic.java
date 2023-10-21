@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RowStatistic implements Statistic {
     private final ArrayList<String> rows = new ArrayList<>();
     private int spaceCount = 0;
-    private String longestLine = "";
+    private String longestLine = null;
 
     public RowStatistic(String path) throws IOException {
 
@@ -64,11 +64,14 @@ public class RowStatistic implements Statistic {
     @Override
     public String getLongestLine() {
 
-        if (longestLine.length() > 0){
+        if (longestLine != null){
             return longestLine;
         }
 
         for (String row : rows){
+            if (longestLine == null){
+                longestLine = "";
+            }
             if (longestLine.length() < row.length()){
                 longestLine = row;
             }
