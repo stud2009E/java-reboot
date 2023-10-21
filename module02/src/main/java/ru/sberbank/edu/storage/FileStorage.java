@@ -1,8 +1,9 @@
 package ru.sberbank.edu.storage;
 
-import ru.sberbank.edu.statistics.Statistic;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
 public class FileStorage implements Storage {
@@ -12,17 +13,17 @@ public class FileStorage implements Storage {
     }
 
     @Override
-    public void save(Statistic statistic) throws IOException {
+    public void save(String data) throws IOException {
         File file = new File(path);
 
         System.out.println("start recording statistics to file...");
 
         System.out.println("recording...");
         try(OutputStreamWriter streamWriter = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)){
-            streamWriter.write(statistic.toString());
+            streamWriter.write(data);
         }
 
-        System.out.println(statistic);
+        System.out.println(data);
         System.out.println("end of recording statistics to file");
     }
 

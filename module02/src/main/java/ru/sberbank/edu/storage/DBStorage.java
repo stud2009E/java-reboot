@@ -11,12 +11,12 @@ public class DBStorage implements Storage {
     }
 
     @Override
-    public void save(Statistic statistic) {
+    public void save(String data) {
         System.out.println("open connection to " + dbname);
         System.out.println("start recording statistics...");
 
         System.out.println("recording...");
-        System.out.println(statistic);
+        System.out.println(data);
 
         System.out.println("end of recording statistics");
         System.out.println("close connection to " + dbname);
