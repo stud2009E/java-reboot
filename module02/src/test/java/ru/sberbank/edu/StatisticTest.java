@@ -1,5 +1,7 @@
 package ru.sberbank.edu;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.sberbank.edu.statistics.RowStatistic;
@@ -11,6 +13,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Unit test for StatisticTest.
@@ -33,6 +36,17 @@ public class StatisticTest {
             assertThat(statistic.getLongestLine()).isEqualTo(longestLine);
         }catch (IOException e){
             fail("file i/o error", e);
+        }
+    }
+
+    @Test
+    @DisplayName("Check io exception with no file")
+    public void failWithIOExceptionTest(){
+        try {
+            new RowStatistic("");
+            fail("Expected exception was not thrown");
+        } catch (IOException e) {
+            assertNotNull(e);
         }
     }
 }
