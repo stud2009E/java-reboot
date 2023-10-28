@@ -63,7 +63,7 @@ public interface CustomArray<T> {
      * @param index - index
      * @throws ArrayIndexOutOfBoundsException if index is out of bounds
      */
-    void remove(int index);
+    T remove(int index);
 
     /**
      * Remove item by value. Remove first item occurrence.
