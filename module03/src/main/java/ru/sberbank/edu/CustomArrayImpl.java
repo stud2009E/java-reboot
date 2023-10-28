@@ -228,4 +228,13 @@ public class CustomArrayImpl<T> implements CustomArray<T> {
     public Object[] toArray() {
         return Arrays.copyOf(elementData, size);
     }
+
+    @Override
+    public String toString() {
+        return "CustomArrayImpl{" +
+                "size=" + size +
+                ", capacity=" + getCapacity() +
+                ", elementData=" + Arrays.toString(toArray()) +
+                '}';
+    }
 }
