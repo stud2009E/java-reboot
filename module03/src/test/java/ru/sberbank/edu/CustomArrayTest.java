@@ -1,5 +1,6 @@
 package ru.sberbank.edu;
 
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -113,6 +114,41 @@ public class CustomArrayTest {
                 () -> stringArray2.addAll(-1, strings2));
         Assertions.assertThrows(IndexOutOfBoundsException.class,
                 () -> stringArray2.addAll(stringArray2.size() + 1, strings2));
+    }
+
+    @Test
+    public void getTest(){
+        CustomArray<String> stringCustomArray = new CustomArrayImpl<>();
+
+        Assertions.assertTrue(stringCustomArray.addAll(strings10));
+
+        for (int i = 0; i < strings10.length; i++) {
+            Assertions.assertEquals(strings10[i], stringCustomArray.get(i));
+        }
+
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                ()-> stringCustomArray.get(-1));
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                ()-> stringCustomArray.get(stringCustomArray.size() + 1));
+
+    }
+
+    @Test
+    public void setTest(){
+        CustomArray<Integer> integerCustomArray = new CustomArrayImpl<>(10);
+        integerCustomArray.addAll(ints10);
+
+        for (int i = 0; i < ints10.length; i++) {
+            int oldValue = integerCustomArray.get(i);
+            int newValue = oldValue + 1;
+            Assertions.assertEquals(oldValue, integerCustomArray.set(i, newValue));
+            Assertions.assertEquals(newValue, integerCustomArray.get(i));
+        }
+
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                ()-> integerCustomArray.set(-1, 0));
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                ()-> integerCustomArray.set(integerCustomArray.size() + 1, 0));
     }
 
 }
