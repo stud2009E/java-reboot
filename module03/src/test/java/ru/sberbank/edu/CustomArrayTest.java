@@ -151,4 +151,36 @@ public class CustomArrayTest {
                 ()-> integerCustomArray.set(integerCustomArray.size() + 1, 0));
     }
 
+    @Test
+    public void removeByIndexTest(){
+        CustomArray<String> customArray = new CustomArrayImpl<>();
+        customArray.addAll(strings2);
+
+        Assertions.assertFalse(customArray.isEmpty());
+        Assertions.assertEquals(customArray.size(), strings2.length);
+
+        Assertions.assertEquals(customArray.get(0), customArray.remove(0));
+        Assertions.assertFalse(customArray.isEmpty());
+        Assertions.assertEquals(customArray.size(), strings2.length - 1);
+
+        Assertions.assertEquals(customArray.get(0), customArray.remove(0));
+        Assertions.assertTrue(customArray.isEmpty());
+        Assertions.assertEquals(customArray.size(), strings2.length - 2);
+
+        Assertions.assertThrows(IndexOutOfBoundsException.class,
+                () -> customArray.remove(0));
+    }
+
+    @Test
+    public void removeByItemTest(){
+        CustomArray<Integer> customArray = new CustomArrayImpl<>();
+        customArray.addAll(ints10);
+
+        for (int item: ints10) {
+            Assertions.assertTrue(customArray.remove(Integer.valueOf(item)));
+        }
+
+        Assertions.assertTrue(customArray.isEmpty());
+        Assertions.assertFalse(customArray.remove(Integer.valueOf(ints10[0])));
+    }
 }
