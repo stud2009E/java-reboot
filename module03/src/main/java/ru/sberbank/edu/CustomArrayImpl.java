@@ -178,7 +178,7 @@ public class CustomArrayImpl<T> implements CustomArray<T> {
 
     @Override
     public boolean contains(T item) {
-        return indexOf(item) > 0;
+        return indexOf(item) > -1;
     }
 
     @Override
