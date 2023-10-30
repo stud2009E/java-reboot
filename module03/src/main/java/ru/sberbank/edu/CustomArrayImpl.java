@@ -71,8 +71,7 @@ public class CustomArrayImpl<T> implements CustomArray<T> {
 
     @Override
     public boolean addAll(T[] items) {
-        addAll(size, items);
-        return true;
+        return addAll(size, items);
     }
 
     @Override
