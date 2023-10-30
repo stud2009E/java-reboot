@@ -1,6 +1,5 @@
 package ru.sberbank.edu;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -117,7 +116,7 @@ public class CustomArrayTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         CustomArray<String> stringCustomArray = new CustomArrayImpl<>();
 
         Assertions.assertTrue(stringCustomArray.addAll(strings10));
@@ -127,14 +126,14 @@ public class CustomArrayTest {
         }
 
         Assertions.assertThrows(IndexOutOfBoundsException.class,
-                ()-> stringCustomArray.get(-1));
+                () -> stringCustomArray.get(-1));
         Assertions.assertThrows(IndexOutOfBoundsException.class,
-                ()-> stringCustomArray.get(stringCustomArray.size() + 1));
+                () -> stringCustomArray.get(stringCustomArray.size() + 1));
 
     }
 
     @Test
-    public void setTest(){
+    public void setTest() {
         CustomArray<Integer> integerCustomArray = new CustomArrayImpl<>(10);
         integerCustomArray.addAll(ints10);
 
@@ -146,13 +145,13 @@ public class CustomArrayTest {
         }
 
         Assertions.assertThrows(IndexOutOfBoundsException.class,
-                ()-> integerCustomArray.set(-1, 0));
+                () -> integerCustomArray.set(-1, 0));
         Assertions.assertThrows(IndexOutOfBoundsException.class,
-                ()-> integerCustomArray.set(integerCustomArray.size() + 1, 0));
+                () -> integerCustomArray.set(integerCustomArray.size() + 1, 0));
     }
 
     @Test
-    public void removeByIndexTest(){
+    public void removeByIndexTest() {
         CustomArray<String> customArray = new CustomArrayImpl<>();
         customArray.addAll(strings2);
 
@@ -171,16 +170,68 @@ public class CustomArrayTest {
                 () -> customArray.remove(0));
     }
 
+    @SuppressWarnings("BoxingBoxedValue")
     @Test
-    public void removeByItemTest(){
+    public void removeByItemTest() {
         CustomArray<Integer> customArray = new CustomArrayImpl<>();
         customArray.addAll(ints10);
 
-        for (int item: ints10) {
+        for (int item : ints10) {
             Assertions.assertTrue(customArray.remove(Integer.valueOf(item)));
         }
 
         Assertions.assertTrue(customArray.isEmpty());
         Assertions.assertFalse(customArray.remove(Integer.valueOf(ints10[0])));
+    }
+
+    @Test
+    public void indexOfTest() {
+        CustomArray<Integer> customArray = new CustomArrayImpl<>();
+        customArray.addAll(ints10);
+
+        for (int i = 0; i < ints10.length; i++) {
+            Assertions.assertEquals(customArray.indexOf(ints10[i]), i);
+        }
+        Assertions.assertEquals(customArray.indexOf(100), -1);
+    }
+
+    @Test
+    public void containsTest() {
+        CustomArray<String> customArray = new CustomArrayImpl<>();
+        customArray.addAll(strings10);
+
+        for (String item : strings10) {
+            Assertions.assertTrue(customArray.contains(item));
+        }
+
+        Assertions.assertFalse(customArray.contains(""));
+    }
+
+
+    @Test
+    public void reverseTest() {
+        CustomArray<String> customArray = new CustomArrayImpl<>();
+        customArray.addAll(strings10);
+        customArray.reverse();
+
+        for (int i = 0; i < strings10.length; i++) {
+            Assertions.assertEquals(customArray.get(i), strings10[strings10.length - i - 1]);
+        }
+    }
+
+    @Test
+    public void ensureCapacityTest(){
+        CustomArray<String> customArray = new CustomArrayImpl<>(5);
+        int capacity1 = customArray.getCapacity();
+
+        customArray.ensureCapacity(20);
+        int capacity2 = customArray.getCapacity();
+
+        Assertions.assertTrue(capacity1 < capacity2);
+
+        customArray.ensureCapacity(40);
+        int capacity3 = customArray.getCapacity();
+
+        Assertions.assertTrue(capacity2 < capacity3);
     }
 }

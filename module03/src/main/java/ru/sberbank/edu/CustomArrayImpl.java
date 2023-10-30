@@ -203,7 +203,7 @@ public class CustomArrayImpl<T> implements CustomArray<T> {
 
     @Override
     public void ensureCapacity(int newElementsCount) {
-        if (newElementsCount > elementData.length && newElementsCount <= DEFAULT_CAPACITY) {
+        if (newElementsCount > elementData.length) {
             grow(newElementsCount);
         }
     }
