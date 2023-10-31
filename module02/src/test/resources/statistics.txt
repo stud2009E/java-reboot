@@ -1,0 +1,3 @@
+space count=15
+line count=5
+longest line='5     whitespace'
