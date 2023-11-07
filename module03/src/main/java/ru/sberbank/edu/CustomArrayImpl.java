@@ -214,6 +214,43 @@ public class CustomArrayImpl<T> implements CustomArray<T> {
         return oldValue;
     }
 
+    private void fastRemove(Object[] es, int i) {
+        final int newSize;
+        if ((newSize = size - 1) > i)
+            System.arraycopy(es, i + 1, es, i, newSize - i);
+        es[size = newSize] = null;
+    }
+
+    @Override
+    public boolean remove(T item) {
+        final Object[] es = elementData;
+        final int size = this.size;
+        int i = 0;
+        int k = -1;
+        if (item == null) {
+            for (; i < size; i++) {
+                if (es[i] == null) {
+                    k = i;
+                    break;
+                }
+            }
+        } else {
+            for (; i < size; i++) {
+                if (item.equals(es[i])) {
+                    k = i;
+                    break;
+                }
+            }
+        }
+
+        if (k == -1) {
+            return false;
+        }
+
+        fastRemove(es, k);
+        return true;
+    }
+
     /**
      * optimized remove with array copy
      * @param es array
