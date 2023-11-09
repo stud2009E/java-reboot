@@ -13,9 +13,7 @@ public class GeoPosition {
     private static final String LONG_PATTERN = "^(-?)(\\d{1}|\\d{2}|\\d{3})\\((\\d{2})'(\\d{2})''\\)$";
     private static final Pattern longPattern = Pattern.compile(LONG_PATTERN);
     private static final Pattern shortPattern = Pattern.compile(SHORT_PATTERN);
-
     private final double latitude;
-
     private final double longitude;
 
     /**

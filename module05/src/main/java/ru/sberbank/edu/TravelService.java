@@ -2,13 +2,13 @@ package ru.sberbank.edu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Travel Service.
  */
 public class TravelService {
 
-    // do not change type
     private final List<CityInfo> cities = new ArrayList<>();
 
     /**
@@ -17,8 +17,16 @@ public class TravelService {
      * @param cityInfo - city info
      * @throws IllegalArgumentException if city already exists
      */
-    public void add(CityInfo cityInfo) {
-        // do something
+    public boolean add(CityInfo cityInfo) {
+        boolean exist = cities.stream()
+                .map(CityInfo::name)
+                .anyMatch(name -> name.equals(cityInfo.name()));
+
+        if (exist) {
+            throw new IllegalArgumentException(String.format("city %s already exists!", cityInfo.name()));
+        }
+
+        return cities.add(cityInfo);
     }
 
     /**
@@ -27,15 +35,23 @@ public class TravelService {
      * @param cityName - city name
      * @throws IllegalArgumentException if city doesn't exist
      */
-    public void remove(String cityName) {
-        // do something
+    public boolean remove(String cityName) {
+        boolean exist = cities.stream()
+                .map(CityInfo::name)
+                .anyMatch(name -> name.equals(cityName));
+
+        if (!exist) {
+            throw new IllegalArgumentException(String.format("city %s does not exist!", cityName));
+        }
+
+        return cities.removeIf(cityInfo -> cityInfo.name().equals(cityName));
     }
 
     /**
      * Get cities names.
      */
     public List<String> citiesNames() {
-        return null;
+        return cities.stream().map(CityInfo::name).collect(Collectors.toList());
     }
 
     /**
@@ -47,7 +63,21 @@ public class TravelService {
      * @throws IllegalArgumentException if source or destination city doesn't exist.
      */
     public int getDistance(String srcCityName, String destCityName) {
+        GeoPosition src = cityByName(srcCityName).position();
+        GeoPosition dest = cityByName(destCityName).position();
+
+        return getDistance(src, dest);
+    }
+
+    private int getDistance(GeoPosition src, GeoPosition dest) {
         return 0;
+    }
+
+    private CityInfo cityByName(String cityName) {
+        return cities.stream()
+                .filter(cityInfo -> cityInfo.name().equals(cityName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Can not find city: %s", cityName)));
     }
 
     /**
@@ -58,6 +88,10 @@ public class TravelService {
      * @throws IllegalArgumentException if city with cityName city doesn't exist.
      */
     public List<String> getCitiesNear(String cityName, int radius) {
-        return null;
+
+        return cities.stream()
+                .map(CityInfo::name)
+                .filter(name -> getDistance(cityName, name) > radius)
+                .collect(Collectors.toList());
     }
 }
