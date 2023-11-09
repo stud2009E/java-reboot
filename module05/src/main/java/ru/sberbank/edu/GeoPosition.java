@@ -19,17 +19,17 @@ public class GeoPosition {
     /**
      * Ctor.
      *
-     * @param latitudeGradus  - latitude in degrees
-     * @param longitudeGradus - longitude in degrees
+     * @param latitudeDegree  - latitude in degrees
+     * @param longitudeDegree - longitude in degrees
      * Possible values: 55, 55(45'07''), 59(57'00'')
      */
-    public GeoPosition(String latitudeGradus, String longitudeGradus) {
+    public GeoPosition(String latitudeDegree, String longitudeDegree) {
         // parse and set latitude and longitude in radian
-        DegreeWrapper latitudeWrapper = parseDegrees(latitudeGradus);
+        DegreeWrapper latitudeWrapper = parseDegrees(latitudeDegree);
         latitudeWrapper.checkBorder(90);
         latitude = latitudeWrapper.getRadians();
 
-        DegreeWrapper longitudeWrapper = parseDegrees(longitudeGradus);
+        DegreeWrapper longitudeWrapper = parseDegrees(longitudeDegree);
         longitudeWrapper.checkBorder(180);
         longitude = longitudeWrapper.getRadians();
     }
@@ -96,17 +96,17 @@ public class GeoPosition {
      * from degrees
      */
     private static class DegreeWrapper {
-        double sign;
-        double degree;
-        double minute;
-        double second;
+        final double sign;
+        final double degree;
+        final double minute;
+        final double second;
 
         DegreeWrapper(String sign, String degree, String minute, String second) {
             try {
-                setSign(sign);
-                setDegree(degree);
-                setMinute(minute);
-                setSecond(second);
+                this.sign = Objects.equals(sign, "-") ? -1 : 1;
+                this.degree = Double.parseDouble(degree);
+                this.minute = Double.parseDouble(minute);
+                this.second = Double.parseDouble(second);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -128,22 +128,6 @@ public class GeoPosition {
             if (minute > 60 || second > 60) {
                 throw new IllegalArgumentException();
             }
-        }
-
-        private void setSign(String sign) {
-            this.sign = Objects.equals(sign, "-") ? -1 : 1;
-        }
-
-        private void setDegree(String degree) {
-            this.degree = Double.parseDouble(degree);
-        }
-
-        private void setMinute(String minute) {
-            this.minute = Double.parseDouble(minute);
-        }
-
-        private void setSecond(String second) {
-            this.second = Double.parseDouble(second);
         }
 
         double getRadians() {

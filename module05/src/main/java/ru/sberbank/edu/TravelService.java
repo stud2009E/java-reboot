@@ -35,16 +35,14 @@ public class TravelService {
      * @param cityName - city name
      * @throws IllegalArgumentException if city doesn't exist
      */
-    public boolean remove(String cityName) {
-        boolean exist = cities.stream()
+    public void remove(String cityName) {
+        cities.stream()
                 .map(CityInfo::name)
-                .anyMatch(name -> name.equals(cityName));
+                .filter(name -> name.equals(cityName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("city %s does not exist!", cityName)));
 
-        if (!exist) {
-            throw new IllegalArgumentException(String.format("city %s does not exist!", cityName));
-        }
-
-        return cities.removeIf(cityInfo -> cityInfo.name().equals(cityName));
+        cities.removeIf(cityInfo -> cityInfo.name().equals(cityName));
     }
 
     /**
