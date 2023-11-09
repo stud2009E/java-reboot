@@ -85,6 +85,13 @@ public class GeoPosition {
         return new DegreeWrapper(sign, degree, minute, second);
     }
 
+    @Override
+    public String toString() {
+        return "GeoPosition{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 
     /**
      * helper class with checks and calculation radians
