@@ -14,22 +14,16 @@ public class GeoPosition {
     private static final Pattern longPattern = Pattern.compile(LONG_PATTERN);
     private static final Pattern shortPattern = Pattern.compile(SHORT_PATTERN);
 
-    /**
-     * Широта в радианах.
-     */
-    private double latitude;
+    private final double latitude;
 
-    /**
-     * Долгота в радианах.
-     */
-    private double longitude;
+    private final double longitude;
 
     /**
      * Ctor.
      *
-     * @param latitudeGradus  - latitude in gradus
-     * @param longitudeGradus - longitude in gradus
-     *                        Possible values: 55, 55(45'07''), 59(57'00'')
+     * @param latitudeGradus  - latitude in degrees
+     * @param longitudeGradus - longitude in degrees
+     * Possible values: 55, 55(45'07''), 59(57'00'')
      */
     public GeoPosition(String latitudeGradus, String longitudeGradus) {
         // parse and set latitude and longitude in radian
@@ -42,14 +36,27 @@ public class GeoPosition {
         longitude = longitudeWrapper.getRadians();
     }
 
+    /**
+     * get latitude
+     * @return {double} latitude
+     */
     public double latitude() {
         return latitude;
     }
 
+    /**
+     * get longitude
+     * @return {double} longitude
+     */
     public double longitude() {
         return longitude;
     }
 
+    /**
+     * Parse degrees to radian and check
+     * @param degreeString degree in strings
+     * @return {DegreeWrapper} wrapper for degrees
+     */
     private DegreeWrapper parseDegrees(String degreeString) {
         Matcher matcher = longPattern.matcher(degreeString);
         if (!matcher.find()) {
@@ -78,6 +85,11 @@ public class GeoPosition {
         return new DegreeWrapper(sign, degree, minute, second);
     }
 
+
+    /**
+     * helper class with checks and calculation radians
+     * from degrees
+     */
     private static class DegreeWrapper {
         double sign;
         double degree;
@@ -95,6 +107,10 @@ public class GeoPosition {
             }
         }
 
+        /**
+         * check longitude and latitude on maximum value
+         * @param border {double}
+         */
         void checkBorder(double border) {
             if (degree > border) {
                 throw new IllegalArgumentException();
