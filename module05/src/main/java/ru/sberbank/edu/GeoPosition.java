@@ -125,7 +125,7 @@ public class GeoPosition {
                 throw new IllegalArgumentException();
             }
 
-            if (minute > 60 || second > 60) {
+            if ( minute < 0 || minute > 59 || second < 0 || second > 59) {
                 throw new IllegalArgumentException();
             }
         }
