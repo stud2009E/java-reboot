@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  */
 public class GeoPosition {
 
-    private static final String SHORT_PATTERN = "^(-?)(\\d{1}|\\d{2}|\\d{3})$";
-    private static final String LONG_PATTERN = "^(-?)(\\d{1}|\\d{2}|\\d{3})\\((\\d{2})'(\\d{2})''\\)$";
+    private static final String SHORT_PATTERN = "^(-?)(\\d{1,3})$";
+    private static final String LONG_PATTERN = "^(-?)(\\d{1,3})\\((\\d{2})'(\\d{2})''\\)$";
     private static final Pattern longPattern = Pattern.compile(LONG_PATTERN);
     private static final Pattern shortPattern = Pattern.compile(SHORT_PATTERN);
     private final double latitude;
@@ -131,7 +131,7 @@ public class GeoPosition {
         }
 
         double getRadians() {
-            return sign * (degree + (minute + second / 60.0) / 60.0);
+            return sign * (degree + (minute + second / 60.0) / 60.0) * Math.PI / 180;
         }
 
     }

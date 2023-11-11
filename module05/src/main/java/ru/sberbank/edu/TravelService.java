@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
  */
 public class TravelService {
 
+    private final double RADIUS = 6400;
+
     private final List<CityInfo> cities = new ArrayList<>();
 
     /**
@@ -67,8 +69,23 @@ public class TravelService {
         return getDistance(src, dest);
     }
 
-    private int getDistance(GeoPosition src, GeoPosition dest) {
-        return 0;
+    private int getDistance(GeoPosition geo1, GeoPosition geo2) {
+        double lat1 = geo1.latitude();
+        double long1 = geo1.longitude();
+        double lat2 = geo2.latitude();
+        double long2 = geo2.longitude();
+
+        double cl1 = Math.cos(lat1);
+        double cl2 = Math.cos(lat2);
+        double sl1 = Math.sin(lat1);
+        double sl2 = Math.sin(lat2);
+        double cDelta = Math.cos(long2 - long1);
+        double sDelta = Math.sin(long2 - long1);
+
+        double y = Math.sqrt(Math.pow(cl2 * sDelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cDelta, 2));
+        double x = sl1 * sl2 + cl1 * cl2 * cDelta;
+
+        return (int) (RADIUS * Math.atan2(x, y));
     }
 
     private CityInfo cityByName(String cityName) {
