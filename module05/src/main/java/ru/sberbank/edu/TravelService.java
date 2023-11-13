@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 public class TravelService {
 
-    private final double RADIUS = 6400;
+    private final double RADIUS = 6_400;
 
     private final List<CityInfo> cities = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class TravelService {
         double y = Math.sqrt(Math.pow(cl2 * sDelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cDelta, 2));
         double x = sl1 * sl2 + cl1 * cl2 * cDelta;
 
-        return (int) (RADIUS * Math.atan2(x, y));
+        return (int) (RADIUS * Math.atan2(y,x));
     }
 
     private CityInfo cityByName(String cityName) {
