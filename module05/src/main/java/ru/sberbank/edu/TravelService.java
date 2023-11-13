@@ -106,7 +106,8 @@ public class TravelService {
 
         return cities.stream()
                 .map(CityInfo::name)
-                .filter(name -> getDistance(cityName, name) > radius)
+                .filter(name -> !name.equals(cityName))
+                .filter(name -> getDistance(cityName, name) <= radius)
                 .collect(Collectors.toList());
     }
 }

@@ -10,7 +10,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class TravelServiceTest {
-
+    final int ERROR = 15;
+    final int MOSCOW_SOCHI = 1360;
+    final int MOSCOW_KAZAN = 723;
+    final int SOCHI_KAZAN = 1512;
+    final int MOSCOW_LONDON = 2500;
+    final int MOSCOW_NEW_YORK = 7370;
+    final int LONDON_NEW_YORK = 5507;
     GeoPosition moscowGeo;
     GeoPosition sochiGeo;
     GeoPosition kazanGeo;
@@ -102,13 +108,7 @@ public class TravelServiceTest {
 
     @Test
     public void distanceTest(){
-        final int ERROR = 15;
-        final int MOSCOW_SOCHI = 1360;
-        final int MOSCOW_KAZAN = 723;
-        final int SOCHI_KAZAN = 1512;
-        final int MOSCOW_LONDON = 2500;
-        final int MOSCOW_NEW_YORK = 7370;
-        final int LONDON_NEW_YORK = 5507;
+
 
         TravelService travelService = new TravelService();
         travelService.add(moscow);
@@ -125,6 +125,25 @@ public class TravelServiceTest {
         Assertions.assertTrue(travelService.getDistance(london.name(), newYork.name()) - LONDON_NEW_YORK < ERROR);
     }
 
+
+    @Test
+    public void nearCityTest(){
+        TravelService travelService = new TravelService();
+        travelService.add(moscow);
+        travelService.add(kazan);
+        travelService.add(sochi);
+        travelService.add(london);
+        travelService.add(newYork);
+
+        Assertions.assertEquals(travelService.getCitiesNear(moscow.name(), 1000), Collections.singletonList(kazan.name()));
+        Assertions.assertEquals(travelService.getCitiesNear(kazan.name(), 1000), Collections.singletonList(moscow.name()));
+        Assertions.assertEquals(travelService.getCitiesNear(moscow.name(), 1500), Arrays.asList(kazan.name(), sochi.name()));
+        Assertions.assertEquals(travelService.getCitiesNear(kazan.name(), 1600), Arrays.asList(moscow.name(), sochi.name()));
+        Assertions.assertEquals(travelService.getCitiesNear(moscow.name(), 3000),
+                Arrays.asList(kazan.name(), sochi.name(), london.name()));
+        Assertions.assertEquals(travelService.getCitiesNear(moscow.name(), 7500),
+                Arrays.asList(kazan.name(), sochi.name(), london.name(), newYork.name()));
+    }
 
     @AfterEach
     public void tearDown() {
