@@ -16,9 +16,9 @@ public class CarDbRepositoryImpl implements CarRepository {
     private static final String UPDATE_CAR_SQL = "UPDATE car SET model = ? WHERE id = ?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM car WHERE id = ?";
     private static final String SELECT_CAR_BY_MODEL = "SELECT * FROM car WHERE model = ?";
-    private static final String DELETE_CAR_BY_ID = "delete from car WHERE id = ?";
+    private static final String DELETE_CAR_BY_ID = "DELETE FROM car WHERE id = ?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM car";
-    private static final String DELETE_ALL_CAR = "delete from car";
+    private static final String DELETE_ALL_CAR = "DELETE FROM car";
 
 
     private final PreparedStatement createPreStmt;
@@ -154,7 +154,7 @@ public class CarDbRepositoryImpl implements CarRepository {
 
         try {
             findByModelPreStmt.setString(1, model);
-            ResultSet rs = findByIdPreStmt.executeQuery();
+            ResultSet rs = findByModelPreStmt.executeQuery();
             while (rs.next()){
                 String id = rs.getString("id");
                 String model1 = rs.getString("model");
