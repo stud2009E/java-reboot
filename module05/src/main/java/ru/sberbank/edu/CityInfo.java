@@ -1,12 +1,14 @@
 package ru.sberbank.edu;
 
+import java.util.Objects;
+
 /**
  * City info
  */
 public class CityInfo {
 
-    private String name;
-    private GeoPosition position;
+    private final String name;
+    private final GeoPosition position;
 
     /**
      * Ctor.
@@ -15,7 +17,26 @@ public class CityInfo {
      * @param position - position
      */
     public CityInfo(String name, GeoPosition position) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(position);
+
         this.name = name;
         this.position = position;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public GeoPosition position() {
+        return position;
+    }
+
+    @Override
+    public String toString() {
+        return "CityInfo{" +
+                "name='" + name + '\'' +
+                ", position=" + position +
+                '}';
     }
 }

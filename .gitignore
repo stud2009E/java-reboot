@@ -12,7 +12,8 @@ target/
 .idea/misc.xml
 .idea/vcs.xml
 .idea/libraries/
-.idea/.gitignore
+*/idea/*
+
 *.iws
 *.iml
 *.ipr
