@@ -22,7 +22,7 @@ public class WeatherCache {
      * If cache doesn't contain weather info OR contains NOT ACTUAL info then we should download info
      * If you download weather info then you should set expiry time now() plus 5 minutes.
      * If you can't download weather info then remove weather info for current city from cache.
-     *
+     * http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=0747854889560766e711233fbdd2e937
      * @param city - city
      * @return actual weather info
      */
