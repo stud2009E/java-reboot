@@ -5,16 +5,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WeatherProvider {
         private final static String URL = "http://api.openweathermap.org/data/2.5/weather?q={q}&APPID={appId}";
-        private RestTemplate restTemplate = new RestTemplate();
-
+        private final RestTemplate restTemplate = new RestTemplate();
         private static final String APP_ID = "0747854889560766e711233fbdd2e937";
+
+    private static final int EXPIRE_MINUTE = 5;
 
     /**
      * Download ACTUAL weather info from internet.
@@ -35,7 +35,11 @@ public class WeatherProvider {
         return parse(obj);
     }
 
-
+    /**
+     * parse response to {@link WeatherInfo}
+     * @param obj {{@link JSONObject}} response
+     * @return {{@link WeatherInfo}}
+     */
     private WeatherInfo parse(JSONObject obj){
         String city = (String) obj.query("/name");
         String shortDescription = (String) obj.query("/weather/0/main");
@@ -53,8 +57,7 @@ public class WeatherProvider {
                 .setFeelsLikeTemperature(feelsLikeTemperature.doubleValue())
                 .setWindSpeed(windSpeed.doubleValue())
                 .setPressure(pressure.doubleValue())
-                .setExpiryTime(LocalDateTime.now())
+                .setExpiryTime(LocalDateTime.now().plusMinutes(EXPIRE_MINUTE))
                 .build();
     }
-
 }
