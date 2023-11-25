@@ -44,8 +44,6 @@ public class WeatherCache {
                     info = weatherProvider.get(city);
                     cache.put(city, info);
                 } catch (Exception ignored){}
-            }else {
-                System.out.printf("%s with cache for city %s%n", Thread.currentThread().getName(), city);
             }
         }
 
