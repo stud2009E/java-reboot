@@ -4,11 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Калькулятор</title>
 </head>
 <body>
+    <a href="/">Домой</a>
     <h1>Калькулятор доходности</h1>
 
     <form action="/finance" method="post">

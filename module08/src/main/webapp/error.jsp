@@ -9,6 +9,7 @@
 </head>
 
 <html>
+    <a href="/">Домой</a>
     <h1>${title}</h1>
     <br>
     <c:forEach items="${requestScope.messages}" var="msg">
