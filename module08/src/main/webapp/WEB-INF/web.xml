@@ -4,4 +4,24 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <servlet-class>ru.sberbank.edu.ErrorServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>finance</servlet-name>
+        <servlet-class>ru.sberbank.edu.FinancialServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>finance</servlet-name>
+        <url-pattern>/finance</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
 </web-app>
