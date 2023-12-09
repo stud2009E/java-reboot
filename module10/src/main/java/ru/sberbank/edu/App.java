@@ -9,14 +9,10 @@ import org.apache.catalina.webresources.StandardRoot;
 
 import java.io.File;
 
-/**
- * Hello world!
- *
- */
 public class App{
     public static void main(String[] args) throws LifecycleException {
         Tomcat tomcat = new Tomcat();
-        tomcat.setBaseDir("temp");
+        tomcat.setBaseDir("temp/module10");
         tomcat.setPort(8088);
 
         StandardContext context = (StandardContext) tomcat.addWebapp("", new File("module10/src/main/webapp").getAbsolutePath());
