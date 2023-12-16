@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
-@EnableJpaRepositories(basePackages = "com.example.module11.repo")
+@EnableJpaRepositories(basePackages = "com.example.module11.dao")
 @Configuration
 @PropertySource("classpath:application.properties")
 public class Config {

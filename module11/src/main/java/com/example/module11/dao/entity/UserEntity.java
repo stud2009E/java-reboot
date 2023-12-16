@@ -1,4 +1,4 @@
-package com.example.module11.entity;
+package com.example.module11.dao.entity;
 
 import jakarta.persistence.*;
 
