@@ -1,7 +1,7 @@
 package com.example.module11.controller;
 
-import com.example.module11.entity.UserEntity;
-import com.example.module11.repo.UserRepository;
+import com.example.module11.dao.entity.UserEntity;
+import com.example.module11.dao.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
