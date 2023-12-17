@@ -10,11 +10,11 @@
     <div class="container">
         <ul>
             <li th:each="u:${users}">
-                    <a th:href="|/user/edit/${u.getId()}|">
-                        <span th:text="${u.getName()}">ticker</span>
-                        <span th:text="${u.getAge()}">name</span>
-                    </a>
                     <form th:action="|/user/delete/${u.getId()}|" method="POST">
+                        <a th:href="|/user/edit/${u.getId()}|">
+                            <span th:text="${u.getName()}">ticker</span>
+                            <span th:text="${u.getAge()}">name</span>
+                        </a>
                         <input type="submit" value="Delete"/>
                     </form>
             </li>
