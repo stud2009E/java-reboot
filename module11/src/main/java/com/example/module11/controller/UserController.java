@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -47,9 +48,15 @@ public class UserController {
     }
 
     @PostMapping(value = "/edit")
-    public String edit(@ModelAttribute("user") UserEntity user){
+    public String edit(@ModelAttribute("user") UserEntity user, Model model){
         repo.findById(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found. Update error"));
+
+        if (Objects.isNull(user.getAge()) ||  user.getAge() <= 0 || user.getName().isEmpty()){
+            model.addAttribute("message", "Error! Fill age and name");
+            model.addAttribute("user", user);
+            return "userEdit";
+        }
 
         repo.save(user);
 
@@ -57,7 +64,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/create")
-    public String create(@ModelAttribute("user") UserEntity user){
+    public String create(@ModelAttribute("user") UserEntity user, Model model){
+
+        if (Objects.isNull(user.getAge()) || user.getAge() <= 0 || user.getName().isEmpty()){
+            model.addAttribute("message", "Error! Fill age and name");
+            model.addAttribute("user", user);
+            return "userCreate";
+        }
+
         UserEntity newUser = repo.save(user);
         return "redirect:/user/all";
     }
