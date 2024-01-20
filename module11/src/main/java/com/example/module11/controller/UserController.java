@@ -1,30 +1,27 @@
 package com.example.module11.controller;
 
 import com.example.module11.dao.entity.UserEntity;
-import com.example.module11.dao.repo.UserRepository;
+import com.example.module11.dao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private UserRepository repo;
+    private UserService userService;
     @Autowired
-    public void setRepo(UserRepository repo) {
-        this.repo = repo;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/all")
     public String all(Model model){
-         List<UserEntity> users = repo.findAll();
+         List<UserEntity> users = userService.findAll();
          model.addAttribute("users", users);
 
          return "userAll";
@@ -33,15 +30,13 @@ public class UserController {
 
     @GetMapping(value = "/create")
     public String create(Model model){
-        model.addAttribute("user", new UserEntity("", null));
+        model.addAttribute("user", userService.getEmptyUserEntity());
         return "userCreate";
     }
 
     @GetMapping(value = "/edit/{userId}")
     public String edit(@PathVariable(name = "userId") Long id, Model model){
-
-        UserEntity user = repo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        UserEntity user = userService.findById(id);
 
         model.addAttribute("user", user);
         return "userEdit";
@@ -49,43 +44,41 @@ public class UserController {
 
     @PostMapping(value = "/edit")
     public String edit(@ModelAttribute("user") UserEntity user, Model model){
-        repo.findById(user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found. Update error"));
+        try {
+            userService.edit(user);
 
-        if (Objects.isNull(user.getAge()) ||  user.getAge() <= 0 || user.getName().isEmpty()){
-            model.addAttribute("message", "Error! Fill age and name");
+        }catch ( IllegalArgumentException ex){
+            model.addAttribute("message", ex.getMessage());
             model.addAttribute("user", user);
+
             return "userEdit";
         }
-
-        repo.save(user);
 
         return "redirect:/user/all";
     }
 
     @PostMapping(value = "/create")
     public String create(@ModelAttribute("user") UserEntity user, Model model){
+        try {
+            userService.create(user);
 
-        if (Objects.isNull(user.getAge()) || user.getAge() <= 0 || user.getName().isEmpty()){
-            model.addAttribute("message", "Error! Fill age and name");
+        } catch (IllegalArgumentException ex){
+            model.addAttribute("message", ex.getMessage());
             model.addAttribute("user", user);
+
             return "userCreate";
         }
 
-        UserEntity newUser = repo.save(user);
         return "redirect:/user/all";
     }
 
 
     @PostMapping(value = "/delete/{userId}")
     public String delete(@PathVariable(name = "userId") Long id){
-        repo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        repo.deleteById(id);
+        userService.deleteById(id);
 
         return "redirect:/user/all";
     }
-
 
 }
