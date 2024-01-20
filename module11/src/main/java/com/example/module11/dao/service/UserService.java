@@ -22,7 +22,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void create(UserEntity user) {
+    public UserEntity create(UserEntity user) {
         if (Objects.isNull(user.getAge()) || user.getAge() <= 0) {
             throw new IllegalArgumentException("Age < 0");
         }
@@ -31,11 +31,11 @@ public class UserService {
             throw new IllegalArgumentException("Empty name");
         }
 
-        repository.save(user);
+        return repository.save(user);
     }
 
 
-    public void edit(UserEntity user) {
+    public UserEntity edit(UserEntity user) {
         if (Objects.isNull(user.getAge()) || user.getAge() <= 0) {
             throw new IllegalArgumentException("Age < 0");
         }
@@ -46,7 +46,7 @@ public class UserService {
 
         findById(user.getId());
 
-        repository.save(user);
+        return repository.save(user);
     }
 
     public UserEntity findById(Long id) {

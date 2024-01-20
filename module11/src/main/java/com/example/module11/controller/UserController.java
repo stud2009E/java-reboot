@@ -29,13 +29,13 @@ public class UserController {
 
 
     @GetMapping(value = "/create")
-    public String create(Model model){
+    public String createForm(Model model){
         model.addAttribute("user", userService.getEmptyUserEntity());
         return "userCreate";
     }
 
     @GetMapping(value = "/edit/{userId}")
-    public String edit(@PathVariable(name = "userId") Long id, Model model){
+    public String editForm(@PathVariable(name = "userId") Long id, Model model){
         UserEntity user = userService.findById(id);
 
         model.addAttribute("user", user);
