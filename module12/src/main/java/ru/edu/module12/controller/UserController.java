@@ -1,5 +1,8 @@
 package ru.edu.module12.controller;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ru.edu.module12.dao.entity.UserEntity;
 import ru.edu.module12.dao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ public class UserController {
     public String all(Model model){
          List<UserEntity> users = userService.findAll();
          model.addAttribute("users", users);
+         model.addAttribute("isLogged", isLogged());
 
          return "userAll";
     }
@@ -79,6 +83,12 @@ public class UserController {
         userService.deleteById(id);
 
         return "redirect:/user/all";
+    }
+
+
+    private boolean isLogged(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
 }
