@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+    <h1>All users</h1>
+    <p th:if="${isLogged}">
+        <a href="/logout">Log out</a>
+    </p>
+    <p>
+        <a href="/user/create">Create user</a>
+    </p>
+    <div class="container">
+        <p th:if="${#lists.isEmpty(users)}">
+            <span>No users</span>
+        </p>
+        <ul>
+            <li th:each="u:${users}">
+                    <form th:action="|/user/delete/${u.getId()}|" method="POST">
+                        <a th:href="|/user/edit/${u.getId()}|">
+                            <span th:text="${u.getName()}">ticker</span>
+                            <span th:text="${u.getAge()}">name</span>
+                        </a>
+
+                        <input th:if="${isLogged}" type="submit" value="Delete"/>
+                    </form>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
