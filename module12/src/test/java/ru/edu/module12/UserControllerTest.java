@@ -1,5 +1,6 @@
 package ru.edu.module12;
 
+import org.springframework.security.test.context.support.WithMockUser;
 import ru.edu.module12.controller.UserController;
 import ru.edu.module12.dao.entity.UserEntity;
 import ru.edu.module12.dao.service.UserService;
@@ -13,7 +14,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders ;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+
 @WebMvcTest({UserController.class})
+@WithMockUser(username = "admin", roles = "ADMIN", password = "123456")
 class UserControllerTest {
 
     @Autowired
@@ -54,7 +58,7 @@ class UserControllerTest {
 
     @Test
     void editUserPositiveTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/edit"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/edit").with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/user/all"));
     }
@@ -64,7 +68,7 @@ class UserControllerTest {
         UserEntity user = new UserEntity("Test", 0);
         Mockito.when(userService.edit(Mockito.any())).thenThrow(new IllegalArgumentException("Age < 0"));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/edit", user, new ExtendedModelMap()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/edit", user, new ExtendedModelMap()).with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("userEdit"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("user"))
@@ -76,7 +80,7 @@ class UserControllerTest {
         UserEntity user = new UserEntity("Test", 0);
         Mockito.when(userService.create(Mockito.any())).thenThrow(new IllegalArgumentException("Age < 0"));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/create", user, new ExtendedModelMap()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/create", user, new ExtendedModelMap()).with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("userCreate"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("user"))
@@ -85,7 +89,7 @@ class UserControllerTest {
 
     @Test
     void createUserPositiveTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/create"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/create").with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/user/all"));
     }
@@ -93,7 +97,7 @@ class UserControllerTest {
     @Test
     void deleteUserTest() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/delete/1"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/delete/1").with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/user/all"));
     }
