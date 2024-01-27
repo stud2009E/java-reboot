@@ -5,7 +5,7 @@ server:
       enabled: false
 spring:
   profiles:
-    active: h2
+    active: postgres
   jpa:
     hibernate:
       ddl-auto: create-drop
